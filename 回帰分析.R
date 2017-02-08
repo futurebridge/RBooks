@@ -33,7 +33,11 @@ hist(lmresiduals , main="残差分布",col = "#0000ff40", border = "#0000ff")
 par (mfrow=c(2,2)) 
 plot(lmresult)
 
-
 lm.predict = predict(result, interval="prediction")
 lm.confidence=　predict(result,interval="confidence")
+
+children = read.csv("children2.csv",header=TRUE)
+children[is.na(children)] = 0 #欠損値に0を代入
+cor (children)
+
 
