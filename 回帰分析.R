@@ -20,7 +20,10 @@ sum(table(children$weight))
 result = lm(age~length, data=children)
 summary(result)
 
-children$length[is.na(children$length)]= mean(children$length)
+
+
+#F検定
+var.test(children$age, children$length)
 
 lmpredict = predict(result)
 lmresiduals  = residuals(result)
@@ -36,8 +39,27 @@ plot(lmresult)
 lm.predict = predict(result, interval="prediction")
 lm.confidence=　predict(result,interval="confidence")
 
-children = read.csv("children2.csv",header=TRUE)
+
+##重回帰分析
+children = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/children2.csv",header=TRUE)
 children[is.na(children)] = 0 #欠損値に0を代入
-cor (children)
+cor (children) #相関行列を表示
+
+pairs(children) #散布図を作成
+
+lmresult = lm(age~length+weight+tenaga+tekubi, data=children)
+
+summary(lmresult)
+
+#car パッケージのインストール
+install.packages("car")
+library(car)
+vif(lmresult)
+
+
+
+#F検定
+var.test(children$length+children$weight+children$tenaga+children$tekubi,children$age)
+
 
 
