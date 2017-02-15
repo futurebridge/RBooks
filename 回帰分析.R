@@ -57,9 +57,9 @@ library(car)
 vif(lmresult)
 
 
-
 #FŒŸ’è
 var.test(children$length+children$weight+children$tenaga+children$tekubi,children$age)
+
 
 
 
