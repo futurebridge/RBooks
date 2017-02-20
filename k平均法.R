@@ -21,14 +21,18 @@ result$betweenss
 install.packages("maptools")
 library(maptools)
 
-plot(beer.mx[,1],beer.mx[,2], col = result$cluster)
 
-
-par(mfrow=c(1,3));
 #クラスターごとに色を変えてプロット
-plot(beer.mx[,1],beer.mx[,2], xlab="コク",ylab="かcol = result$cluster)
+plot(beer.mx, col = result$cluster)
 #重ならないようにラベルを表示
 pointLabel(beer.mx,labels=rownames(beer.mx))
 #中心点を表示
 points(result$centers, col = 1:5, pch = 8)
 
+#clusterパッケージのインストール
+install.packages("cluster")
+library(cluster)
+
+result = clusGap(beer, kmeans, K.max = 10, B = 100, verbose = interactive())
+result
+plot(result)

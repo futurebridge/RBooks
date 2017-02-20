@@ -19,8 +19,18 @@ plot(result,data=wine2)
 #誤検知率を求める=(クラスタリング結果-正解データの絶対値)を全体数で割る
 sum(abs(result.m[1,]-result.m[2,]))/sum(table(wine["クラス"]))
 
+
 result2 = clusGap(wine2, kmeans, K.max = 10, B = 100, verbose = interactive())
 result2
 plot(result2)
 
+#clusterパッケージのインストール
+install.packages("cluster")
+library(cluster)
+
+#距離を求める
+dist = dist(wine2)^2
+#シルエット係数を求める
+sil = silhouette (result$cluster, dist)
+plot(sil)
 
