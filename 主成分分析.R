@@ -13,10 +13,11 @@ cov(beer)
 #—İÏŠñ—^—¦‚ğ‹‚ß‚é
 contribution=NULL
 accumulate=0
+i=0
 for (i in 1:3){
-	accumulate= round(Ebeer$values[i]/sum(Ebeer$values),3)+accumulate
-	contribution[i] =@paste ("‘æ",i,"å¬•ª","ŒÅ—L’l",round(Ebeer$values[i],3)
-                                ,"Šñ—^—¦",round(Ebeer$values[i]/sum(Ebeer$values),3)
+	accumulate= Ebeer$values[i]/sum(Ebeer$values)+accumulate
+	contribution[i] =@paste ("‘æ",i,"å¬•ª","ŒÅ—L’l",Ebeer$values[i]
+                                ,"Šñ—^—¦",Ebeer$values[i]/sum(Ebeer$values)
 					  ,"—İÏŠñ—^—¦",accumulate)
 }
 contribution
@@ -42,8 +43,11 @@ colnames(wine)=c('ƒNƒ‰ƒX','ƒAƒ‹ƒR[ƒ‹','ƒŠƒ“ƒS_','ŠD','ŠD‚ÌƒAƒ‹ƒJƒŠ“x','ƒ}ƒOƒlƒ
                  'ƒ|ƒŠƒtƒFƒm[ƒ‹','F','F‘Š','OD280/OD315','ƒvƒƒŠƒ“')
 
 wine2 = wine[setdiff(colnames(wine), "ƒNƒ‰ƒX")]
-(Rwine = cor(wine2))
-(Ewine = eigen(Rwine))
+
+#ŒÅ—L’lŒÅ—LƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+Rwine = cor(wine2)
+Ewine = eigen(Rwine)
+Ewine$values
 
 #—İÏŠñ—^—¦‚ğ‹‚ß‚é
 contribution=NULL
@@ -51,9 +55,9 @@ accumulate=0
 i=0
 
 for (i in 1:13){
-	accumulate= round(Ewine$values[i]/sum(Ewine$values),3)+accumulate
-	contribution[i] =@paste ("‘æ",i,"å¬•ª","ŒÅ—L’l",round(Ewine$values[i],3)
-                                ,"Šñ—^—¦",round(Ewine$values[i]/sum(Ewine$values),3)
+	accumulate= Ewine$values[i]/sum(Ewine$values)+accumulate
+	contribution[i] =@paste ("‘æ",i,"å¬•ª","ŒÅ—L’l",Ewine$values[i]
+                                ,"Šñ—^—¦",Ewine$values[i]/sum(Ewine$values)
 					  ,"—İÏŠñ—^—¦",accumulate)
 }
 contribution
