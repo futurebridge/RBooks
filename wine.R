@@ -34,3 +34,13 @@ dist = dist(wine2)^2
 sil = silhouette (result$cluster, dist)
 plot(sil)
 
+#mclust
+#mclustパッケージのインストール
+install.packages("mclust")
+library(mclust)
+
+wine.mclust = Mclust(wine2)
+summary(wine.mclust)
+wine.mclust$BIC
+plot(wine.mclust)
+
