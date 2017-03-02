@@ -2,7 +2,7 @@
 source("https://raw.githubusercontent.com/futurebridge/RBooks/master/beer.R")
 beer
 
-#相関行列を求める ()は値を表示する
+#相関行列を求める ()は変数に代入しながら値を表示する
 (Rbeer = cor(beer))
 #参考までに分散共分散行列を求める
 cov(beer)
@@ -23,11 +23,7 @@ for (i in 1:3){
 contribution
 
 #第1、第2主成分の固有ベクトルをプロットする
-Ebeer
-
 plot(Ebeer$vectors[1:3,1:2],xlab="第1主成分",ylab="第2主成分")
-
-Ebeer$vectors[1:3,1:2]
 
 #主成分分析
 result = prcomp(beer, scale=TRUE)
