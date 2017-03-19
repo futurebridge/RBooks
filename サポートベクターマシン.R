@@ -1,23 +1,10 @@
-
-#カーネル関数を求める
-weather=read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data.csv",header=TRUE)
-
-#それぞれの変数を正規化する
-smax = scale(weather$max)
-smin = scale(weather$min)
-
-sigma1 = (2 * 1.5)^2 #σ=1.5
-sigma2 = (2 * 5)^2   #σ=5
-#-(x1 - x2)^2 / 2σ^2 を計算
-kernel1 = (-(abs(smin-smax))^2) / sigma1
-kernel2 = (-(abs(smin-smax))^2) / sigma2
-
-summary(data.frame(kernel1,kernel2))
+###サポートベクターの計算
+#kernlabパッケージをインストール
+install.packages("kernlab")
+#kernlabを有効にする
+library(kernlab)
 
 
-
-
-#サポートベクターの計算
 #値を用意する
 x1 = scale(c(1,2,5,5,5))
 x2 = scale(c(5,3,2,4,4))
@@ -49,6 +36,7 @@ for (	i in svm.model@SVindex){
 sum(beta.x1)
 sum(beta.x2)
 
+#決定値の算出
 decision=NULL
 for(i  in 1:5){
 decision[i]=sum(beta.x1) * x1[i] + sum(beta.x2) * x2[i] - svm.model@b
@@ -60,7 +48,23 @@ predict(svm.model,svm,type="decision")
 
 
 
-#迷惑メール・正常メールデータのロード
+###カーネル関数を求める
+weather=read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data.csv",header=TRUE)
+
+#それぞれの変数を正規化する
+smax = scale(weather$max)
+smin = scale(weather$min)
+
+sigma1 = (2 * 1.5)^2 #σ=1.5
+sigma2 = (2 * 5)^2   #σ=5
+#-(x1 - x2)^2 / 2σ^2 を計算
+kernel1 = (-(abs(smin-smax))^2) / sigma1
+kernel2 = (-(abs(smin-smax))^2) / sigma2
+
+summary(data.frame(kernel1,kernel2))
+
+
+###迷惑メール・正常メールデータのロード
 library(kernlab)
 data(spam)
 #4601の中から任意に2500個を抽出
