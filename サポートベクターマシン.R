@@ -73,7 +73,19 @@ spam.num=sample(4601,2500)
 spam.train=spam[spam.num,]
 spam.test=spam[-spam.num,]
 
+#線形分類でのモデル生成
+spam.svm = ksvm(type~., data=spam.train, kernel="vanilladot")
+
+spam.pre = predict(spam.svm, spam.test[,-58])
+
+(spam.tab = table(spam.test[,58],spam.pre))
+1-(sum(diag(spam.tab))/sum(spam.tab))
+
+
+
+#カーネル法によるモデル生成
 spam.svm = ksvm(type~., data=spam.train, kernel="rbfdot", C=5, kpar=list(sigma=10))
+
 
 spam.pre = predict(spam.svm, spam.test[,-58])
 
