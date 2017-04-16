@@ -71,20 +71,23 @@ simplemarcov = function(initial,translate,size){
 	 Tn = Tn%*%translate
  	 res1[i+1] = Tn[1,1]
  	 res2[i+1] = Tn[1,2]
-	}
+	}	
 	return(data.frame(res1,res2))
 }
 
 #初期確率を定義
-initial=matrix(c(0.5,0.5),1,2,byrow=TRUE)
+initial=matrix(c(0.1,0.9),1,2,byrow=TRUE)
 #推移確率を定義
-translate=matrix(c(0.6,0.4,0.7,0.3),2,2,byrow=TRUE)
+translate=matrix(c(0.4,0.6,0.7,0.3),2,2,byrow=TRUE)
 
 #初期確率、推移確率をもとに３０回試行
 result=simplemarcov(initial,translate,30)
 
 #結果をプロットする
-plot(result$res1,col="blue",type="l",ylab="確率",ylim=c(0,1.0))
+plot(result$res1,col="blue",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
 par(new=TRUE)
-plot(result$res2,col="red",type="l",ylab="確率",ylim=c(0,1.0))
+plot(result$res2,col="red",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
+
+#Stan
+
 
