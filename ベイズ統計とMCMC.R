@@ -89,5 +89,14 @@ par(new=TRUE)
 plot(result$res2,col="red",type="l",ylab="Šm—¦",xlab="‰ñ”",ylim=c(0,1.0))
 
 #Stan
+install.packages('rstan')
+library(rstan)
 
+d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/salary.csv") 
+data = list(N=nrow(d),X=d$X, Y=d$Y) #X,Y‚ğdata‚É‘ã“ü
 
+fit = stan(file='weight.stan',data=data,iter=1000) #stan‚Éˆ—‚ğ“n‚·
+
+install.packages('ggmcmc')
+library(ggmcmc)
+ggmcmc(ggs(fit))
