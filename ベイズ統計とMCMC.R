@@ -92,11 +92,70 @@ plot(result$res2,col="red",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
 install.packages('rstan')
 library(rstan)
 
+#stanのコード
+weight='
+data {
+  int N;
+  real X[N];
+  real Y[N];
+}
+
+parameters {
+  real a;
+  real b;
+  real<lower=0> sigma;
+}
+
+model {
+  for (n in 1:N) {
+    Y[n] ~ normal(a + b*X[n], sigma);
+  }
+}
+'
+
 d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/weight.csv") 
 data = list(N=nrow(d),X=d$X, Y=d$Y) #X,Yをdataに代入
 
-model = stan(file='weight.stan',data=data,iter=1000) #stanに処理を渡す
+fit = stan(model_code=weight,data=data,iter=1000,chains=4) #stanに処理を渡す
 
 install.packages('ggmcmc')
 library(ggmcmc)
 ggmcmc(ggs(fit))
+
+#ロジスティクス回帰
+
+ticket='
+data {
+    int<lower=0> N;
+    int<lower=0> M;
+    int<lower=0, upper=1> Y[N];
+    matrix[N, M] X;
+}
+
+parameters {
+    vector[M] beta; 
+}
+
+model {
+    for (i in 1:N)
+        Y[i] ~  bernoulli_logit(X*beta);
+}
+'
+
+
+d.titanic = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/titanic.csv") 
+Y=d.titanic$Survived
+X=cbind(1,d.titanic$Age,d.titanic$Sex,d.titanic$Class)
+N=nrow(d.titanic)
+M=ncol(X)
+
+
+
+data = list(N=N,M=M,X=X,Y=Y) #X,Yをdataに代入
+
+fit = stan(model_code=ticket,data=data,iter=1000) #stanに処理を渡す
+
+
+
+
+
