@@ -124,7 +124,7 @@ ggmcmc(ggs(fit))
 
 #ロジスティクス回帰
 
-ticket='
+titanic='
 data {
     int<lower=0> N;
     int<lower=0> M;
@@ -149,12 +149,11 @@ X=cbind(1,d.titanic$Age,d.titanic$Sex,d.titanic$Class)
 N=nrow(d.titanic)
 M=ncol(X)
 
-
-
 data = list(N=N,M=M,X=X,Y=Y) #X,Yをdataに代入
 
-fit = stan(model_code=ticket,data=data,iter=1000) #stanに処理を渡す
+fit = stan(model_code=titanic,data=data,iter=100,chains=4) #stanに処理を渡す
 
+print(fit)
 
 
 
