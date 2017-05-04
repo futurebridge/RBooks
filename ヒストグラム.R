@@ -1,9 +1,11 @@
 
-h = hist(weather$min,main="ヒストグラム",xlab="最低気温",col="#edae00")
+
+weather=read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data.csv",header=TRUE)
+
+h = hist(weather$min,main="ヒストグラム",xlab="最低気温",col="yellow")
 n = length(h$counts) # クラスの数
 class_names = NULL # クラスの名前
-frequency_table =NULL
-accumulate=0 #相対比
+
 for(i in 1:n) {
   class_names[i] = paste(h$breaks[i], "～", h$breaks[i+1])
 }
