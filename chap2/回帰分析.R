@@ -2,19 +2,31 @@ children = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/maste
 
 summary(children)
 
+#年齢と体重との相関係数を算出
 cor.test(children$age,children$weight)
+#年齢と身長との相関係数を算出
 cor.test(children$age,children$length)
 
+＃２ｘ２のグラフを出力　最後に”;”をつける
 par(mfrow=c(2,2));
+＃年齢と身長のグラフを描画
 plot(children$age, children$length)
+＃年齢と体重のグラフを描画
 plot(children$age, children$weight)
+
+#身長の分布に関するヒストグラムを描画
 hist(children$length)
+#身長の分布に関するヒストグラムを描画
 hist(children$weight)
 
-
+#年齢のデータ個数を表示
 sum(table(children$age))
-sum(table(children$length))
-sum(table(children$weight))
+
+#身長のデータ個数を表示
+sum(table(children$age))
+
+#体重のデータ個数を表示
+sum(table(children$age))
 
 
 result = lm(age~length, data=children)
