@@ -48,14 +48,21 @@ ck.d=data.frame(children$age,children$length,cooks.distance(result))
 subset(ck.d,ck.d$cooks.distance.result>0.02)
 
 
+#予測区間を求める
 lm.predict = predict(result, interval="prediction")
-lm.confidence=　predict(result,interval="confidence")
+#信頼区間を求める
+lm.confidence = predict(result,interval="confidence")
+
+summary(lm.predict)
+summary(lm.confidence)
 
 
 ##重回帰分析
-children = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/children2.csv",header=TRUE)
-children[is.na(children)] = 0 #欠損値に0を代入
+children = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap2/children2.csv",header=TRUE)
+#NAについて削除
+children=na.omit(children)
 cor (children) #相関行列を表示
+
 
 pairs(children) #散布図を作成
 
@@ -68,9 +75,11 @@ install.packages("car")
 library(car)
 vif(lmresult)
 
+#多重共線性を回避するため、説明変数を減らしてモデルを作成
+lmresult = lm(age~weight+tenaga+tekubi, data=children)
+vif(lmresult)
 
-#F検定
-var.test(children$length+children$weight+children$tenaga+children$tekubi,children$age)
+
 
 
 
