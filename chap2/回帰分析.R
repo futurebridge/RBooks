@@ -79,6 +79,21 @@ vif(lmresult)
 lmresult = lm(age~weight+tenaga+tekubi, data=children)
 vif(lmresult)
 
+#AIC.Rを読み込む
+source("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap2/AIC.R")
+#変数を表示
+aictest
+#相関行列の表示
+cor(aictest)
+
+install.packages("MASS")
+library(MASS)
+
+#重回帰モデルの作成
+result=lm(Y~X1+X2+X3+X4,data=aictest)
+#AICの実行
+result2 = stepAIC(result)
+
 
 
 
