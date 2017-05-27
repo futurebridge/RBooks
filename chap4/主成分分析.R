@@ -1,11 +1,9 @@
 #ビールデータの読み込み
-source("https://raw.githubusercontent.com/futurebridge/RBooks/master/beer.R")
+source("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap2/beer.R")
 beer
 
 #相関行列を求める ()は変数に代入しながら値を表示する
 (Rbeer = cor(beer))
-#参考までに分散共分散行列を求める
-cov(beer)
 
 #相関行列から固有値、固有ベクトルを求める
 (Ebeer = eigen(Rbeer))
@@ -61,9 +59,12 @@ contribution
 
 
 result.wine = prcomp(wine2, scale=TRUE)
+
 biplot(result.wine)
 
-result.wine$rotation
-wine['色']
-wine[158]
+data.frame(sort(result.wine$rotation[,1]))
 
+#strで158番のワインのデータを表示
+str(wine[158,])
+#158番目の主成分得点を表示
+result.wine$x[158,]

@@ -1,4 +1,4 @@
-gakuryoku = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/gakuryoku.csv",header=TRUE)
+gakuryoku = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap4/gakuryoku.csv",header=TRUE)
 
 Rgakuryoku=cor(gakuryoku)
 Egakuryoku=eigen(Rgakuryoku)
