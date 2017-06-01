@@ -94,7 +94,7 @@ result=lm(Y~X1+X2+X3+X4,data=aictest)
 #AIC‚ÌÀs
 result2 = stepAIC(result)
 
-
+@
 
 
 

@@ -1,3 +1,9 @@
+
+
+#ポアソン分布を求める
+dpois(6,4)
+
+#ポアソン回帰に必要なデータ(faraway)パッケージのインストール
 install.packages("faraway")
 library(faraway)
 data(gala)

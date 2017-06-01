@@ -4,7 +4,7 @@ install.packages("arules")
 library(arules)
 
 #groceriesファイルを読み込む
-groceries=read.transactions(file='https://raw.githubusercontent.com/futurebridge/RBooks/master/groceries.csv',
+groceries=read.transactions(file='https://raw.githubusercontent.com/futurebridge/RBooks/master/chap5/groceries.csv',
                             sep=',')
 
 summary(groceries)
@@ -39,6 +39,8 @@ plot(grule3,method="graph")
 plot(grule3,method="graph",interactive=TRUE)
 
 
+#偶数だけを抽出しgrule4に代入
+grule4=grule3[seq(0, length(grule3), +2),]
 #クラスタリング
 d=dissimilarity(grule3)
 
@@ -59,34 +61,6 @@ plot(ward, main="ウォード法");
 plot(cntr, main="重心法"); 
 plot(medi, main="メディアン法");
 
-#ルール１から１０まで表示
-inspect(grule3[1:10])
-
-#偶数だけを抽出しgrule4に代入
-grule4=grule3[seq(0, length(grule3), +2),]
-#クラスタリング
-d=dissimilarity(grule4)
-
-#それぞれのクラスタリング手法でクラスタリング
-sngl=hclust(d,"single")
-comp=hclust(d) 
-aver=hclust(d,"average")
-ward=hclust(d,"ward.D2")
-cntr=hclust(d,"centroid")
-medi=hclust(d,"median")
-
-#グラフの描画
-par(mfrow=c(2,3));
-plot(sngl, main="単連結法"); 
-plot(comp, main="完全連結法"); 
-plot(aver, main="群平均法") ;　
-plot(ward, main="ウォード法"); 
-plot(cntr, main="重心法"); 
-plot(medi, main="メディアン法");
-
-inspect(grule4[1:8])
-inspect(grule4[7:11])
-inspect(grule4[12:15])
-
-
+#ルールを表示
+inspect(grule3)
 

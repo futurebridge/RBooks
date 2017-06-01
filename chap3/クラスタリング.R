@@ -15,11 +15,14 @@ round(beer.d,2)
 
 #クラスタリングを実施
 sngl=hclust(beer.d,"single")
+
 #併合過程を表示
 sngl$merge
+plot(sngl)
 
 
-
+#各計算方法によるマージ過程
+sngl=hclust(beer.d,"single")
 comp=hclust(beer.d) 
 aver=hclust(beer.d,"average")
 ward=hclust(beer.d,"ward.D2")
@@ -40,4 +43,7 @@ plot(aver, main="群平均法") ;　
 plot(ward, main="ウォード法"); 
 plot(cntr, main="重心法"); 
 plot(medi, main="メディアン法");
+
+
+
 

@@ -26,8 +26,10 @@ head(d.data)
 #目的変数 Survived (Yes/No) 説明変数を Class, Sex, Age
 result = glm(Survived~., data = d.data, family = binomial)
 
+summary(result)
+
 #逸脱度を表示
-anova(result)
+anova(result,test="Chisq")
 
 #係数を表示
 result$coefficients

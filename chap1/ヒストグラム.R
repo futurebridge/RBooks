@@ -13,4 +13,24 @@ for(i in 1:n) {
 frequency_table = data.frame(クラス=class_names, 頻度=h$counts,相対比= h$counts/length(weather$min))
 frequency_table
 
+#正規分布
+u = 171.9
+sigma = 5.645
+x = 180
+
+1 /(sqrt(2*pi)*sigma)*exp(-((x-u)^2)/(2*(sigma^2)))
+dnorm(x,u,sigma)
+
+#t分布
+#t分布による推定
+bread=c(102,108,110,103,99,107,103,98,101,100)
+bread
+t.test(bread)
+
+#指数の表示の抑制
+10000000
+options(scipen=10)
+10000000
+
+
 

@@ -35,6 +35,7 @@ result = clusGap(beer, kmeans, K.max = 10, B = 100, verbose = interactive())
 result
 plot(result)
 
+#ワインデータの読み込み
 wine = read.csv('https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data')
 
 colnames(wine)=c('クラス','アルコール','リンゴ酸','灰','灰のアルカリ度','マグネシウム','フェノール','フラボノイド','ノンフラボノイド',
@@ -66,9 +67,9 @@ install.packages("cluster")
 library(cluster)
 
 #距離を求める
-dist = dist(wine2)^2
+w.dist = dist(wine2)^2
 #シルエット係数を求める
-sil = silhouette (result$cluster, dist)
+sil = silhouette (result$cluster, w.dist)
 plot(sil)
 
 #mclust
