@@ -16,12 +16,15 @@ svm.model = ksvm(factor(y)~x1+x2,data=svm,kernel="vanilladot")
 
 #サポートベクターの要素を表示
 svm.model@SVindex
+
+#ラグランジュ乗数b、閾値bを表示
+svm.model@b
+svm.model@alpha
+
 #ラグランジュ乗数αを表示、データフレーム型に代入
 (alpha=data.frame(svm.model@alpha))
-#閾値bを表示
-svm.model@b
 
-
+#βを求める
 beta.x1=NULL
 beta.x2=NULL
 s=1
@@ -49,7 +52,7 @@ predict(svm.model,svm,type="decision")
 
 
 ###カーネル関数を求める
-weather=read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data.csv",header=TRUE)
+weather=read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data/data.csv",header=TRUE)
 
 #それぞれの変数を正規化する
 smax = scale(weather$max)
@@ -61,14 +64,13 @@ sigma2 = (2 * 5)^2   #σ=5
 kernel1 = (-(abs(smin-smax))^2) / sigma1
 kernel2 = (-(abs(smin-smax))^2) / sigma2
 
-summary(data.frame(kernel1,kernel2))
+summary(data.frame(kernel1,kernel2,exp(kernel1),exp(kernel2)))
 
 
 ###迷惑メール・正常メールデータのロード
 library(kernlab)
 data(spam)
 #4601の中から任意に2500個を抽出
-set.seed(50)
 spam.num=sample(4601,2500)
 spam.train=spam[spam.num,]
 spam.test=spam[-spam.num,]
@@ -173,32 +175,21 @@ for (i in 1:26){
 letters.name
 mean(accuracy)
 
-#交差検証をいれてモデルを作成
+#1クラス　サポートベクターマシン
+#ランダムなデータを用意する
+x = rnorm(1000)
+y = rnorm(1000)
+cdata = data.frame(type=1, x, y)
 
-#モデル作成・予測
-letters.svm=ksvm(letter~.,data=letters_train,kernel="rbfdot",cross=20)
-letters.pre = predict(letters.svm,letters_test)
-letters.svm
+#１クラスSVMモデルの作成
+csvm = ksvm(type~.,data=cdata,type="one-svc",kernel="rbfdot",kpar=list(sigma=0.1),cross=10,nu=0.1)
 
-#結果の確認
-head(letters.pre)
-table(letters.pre,letters_test$letter)
+#外れ値と正常値を予測する
+svc.pre= predict(csvm)
+#正常値を１、外れ値を２に分類する
+d.svc.pre = ifelse(svc.pre==TRUE, 1, 2)
 
-#誤検知率の表示
-#予測・正解データを行列型に代入
-letters.mat=as.matrix(table(letters.pre,letters_test$letter))
-#列名(A-Z)を取得
-letters.col=colnames(letters.mat)
-letters.name=NULL
-accuracy=NULL
-
-#アルファベット分、誤検知率を計算
-for (i in 1:26){
- accuracy[i] = 1-letters.mat[i,i]/sum(letters.mat[,i])
- letters.name[i] =  paste(letters.col[i], 
-                    "検知数",letters.mat[i,i],"合計",sum(letters.mat[,i]), 
-                    " 誤検知率",round(1-letters.mat[i,i]/sum(letters.mat[,i]),3))
-		
-}
-letters.name
-mean(accuracy)
+#元のx,yデータに正常値・異常値を付与する
+data.result = cbind(cdata,d.svc.pre)
+#正常値を赤、異常値を青としてプロットする
+plot(data.result[,2:3], pch=21, bg=c("red","blue")[data.result$d.svc.pre])
