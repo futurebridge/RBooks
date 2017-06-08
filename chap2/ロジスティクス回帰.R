@@ -48,6 +48,9 @@ dim(spam)
 #58列目を集計
 table(spam[,58])
 
+
+#シードを設定
+set.seed(40)
 #0～4601までのランダムな値を生成
 tr.num=sample(4601,2500)
 #spamデータからランダムに選んだ値をモデル学習データに充てる
@@ -63,44 +66,13 @@ dim(spam.test)
 glm.model = glm(type~., spam.train, family=binomial)
 summary(glm.model)
 
-sort(round(exp(glm.model$coefficients),3))
-
-glm.model2 = update(glm.model, ~ . - cs, data = spam.train)
-
+#誤分類率を算出
 glm.pre = ifelse(predict(glm.model,spam.test[,-58]) > 0,"spam","nospam")
 glm.pre
 (glm.tab = table(spam.test[ ,58], glm.pre))
-##ロジスティクス回帰2 迷惑メール判定
-#kernlabパッケージの導入
-install.packages("kernlab")
-library(kernlab)
-#spamデータのロード
-data(spam)
-#行と列の数を表示
-dim(spam)
-#58列目を集計
-table(spam[,58])
-
-#0～4601までのランダムな値を生成
-tr.num=sample(4601,2500)
-#spamデータからランダムに選んだ値をモデル学習データに充てる
-spam.train=spam[tr.num,]
-#モデル学習データ以外の残り(-tr.num)をテストデータに充てる
-spam.test=spam[-tr.num,]
-
-#行と列の数を表示
-dim(spam.train)
-dim(spam.test)
-
-#モデル作成
-glm.model = glm(type~., spam.train, family=binomial)
-summary(glm.model)
-
-#テストデータを代入し、0以上であればspam, それ以外であればnonspam
-glm.pre = ifelse(predict(glm.model,spam.test[,-58]) > 0,"spam","nonspam")
-glm.pre
-(glm.tab = table(spam.test[ ,58], glm.pre))
 1-(sum(diag(glm.tab))/sum(glm.tab))
+
+
 
 #AICでパラメータを削減
 glm.model2 = step(glm.model)

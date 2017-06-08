@@ -86,7 +86,7 @@ aictest
 #相関行列の表示
 cor(aictest)
 
-install.packages("MASS")
+#MASSライブラリを有効にする
 library(MASS)
 
 #重回帰モデルの作成
