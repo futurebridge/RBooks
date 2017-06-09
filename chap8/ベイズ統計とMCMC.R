@@ -9,10 +9,11 @@ x=seq(0,100,1)
 plot(dbinom(x,100,0.2),type="h",col="blue",xlab="女性の通る回数",ylab="確率")
 
 
-#確率を変えながらプロットする
+#確率を変えながプロットする
 z=seq(0,1,0.01)
 plot(z,dbinom(20,100,z),type="h",col="blue",xlab="θ",ylab="尤度")
 
+#確率密度関数と尤度関数の合計
 sum(dbinom(x,100,0.2))
 sum(dbinom(20,100,z))
 
@@ -76,11 +77,12 @@ simplemarcov = function(initial,translate,size){
 }
 
 #初期確率を定義
-initial=matrix(c(0.1,0.9),1,2,byrow=TRUE)
+initial=matrix(c(0.4,0.6),1,2,byrow=TRUE)
 #推移確率を定義
 translate=matrix(c(0.4,0.6,0.7,0.3),2,2,byrow=TRUE)
 
 #初期確率、推移確率をもとに３０回試行
+Tn=matrix(c(0.5,0.5),1,2,byrow=TRUE)
 result=simplemarcov(initial,translate,30)
 
 #結果をプロットする
@@ -88,11 +90,24 @@ plot(result$res1,col="blue",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
 par(new=TRUE)
 plot(result$res2,col="red",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
 
+#初期確率を変える
+initial=matrix(c(0.1,0.9),1,2,byrow=TRUE)
+result=simplemarcov(initial,translate,30)
+#結果をプロットする
+plot(result$res1,col="blue",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
+par(new=TRUE)
+plot(result$res2,col="red",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
+
+
+
+
 #Stan
 install.packages('rstan')
 library(rstan)
 
-#stanのコード
+system('g++ -v')
+
+#ステップ1：stanのコードを読み込む
 weight='
 data {
   int N;
@@ -113,7 +128,8 @@ model {
 }
 '
 
-d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/weight.csv") 
+#ステップ２：Rでデータをロードする
+d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data/weight.csv") 
 data = list(N=nrow(d),X=d$X, Y=d$Y) #X,Yをdataに代入
 
 fit = stan(model_code=weight,data=data,iter=1000,chains=4) #stanに処理を渡す
