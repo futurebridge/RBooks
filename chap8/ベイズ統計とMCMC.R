@@ -129,48 +129,18 @@ model {
 '
 
 #ステップ２：Rでデータをロードする
-d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data/weight.csv") 
+d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data/chap9/weight.csv") 
 data = list(N=nrow(d),X=d$X, Y=d$Y) #X,Yをdataに代入
 
+
+#ステップ３：StanでMCMCの実行
 fit = stan(model_code=weight,data=data,iter=1000,chains=4) #stanに処理を渡す
 
+#ステップ４：結果の値を表示
+print(fit)
+
+#ggmcmcライブラリのインストール
 install.packages('ggmcmc')
 library(ggmcmc)
 ggmcmc(ggs(fit))
-
-#ロジスティクス回帰
-
-titanic='
-data {
-    int<lower=0> N;
-    int<lower=0> M;
-    int<lower=0, upper=1> Y[N];
-    matrix[N, M] X;
-}
-
-parameters {
-    vector[M] beta; 
-}
-
-model {
-    for (i in 1:N)
-        Y[i] ~  bernoulli_logit(X*beta);
-}
-'
-
-
-d.titanic = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/titanic.csv") 
-Y=d.titanic$Survived
-X=cbind(1,d.titanic$Age,d.titanic$Sex,d.titanic$Class)
-N=nrow(d.titanic)
-M=ncol(X)
-
-data = list(N=N,M=M,X=X,Y=Y) #X,Yをdataに代入
-
-fit = stan(model_code=titanic,data=data,iter=100,chains=4) #stanに処理を渡す
-
-print(fit)
-
-
-
 
