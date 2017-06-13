@@ -27,14 +27,14 @@ b = 2
 (a = x1 %*% w1 + b)
 
 #ニューラルネット
-concrete = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/concrete.csv") 
+concrete = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap9/concrete.csv") 
 str(concrete)
 
 normalize = function(x){
  return((x-min(x)) / (max(x)-min(x)))
 }
 
-#コンクリートデータを正規化
+#コンクリートデータを正規化(normalize関数を適用)
 concrete_norm = as.data.frame(lapply(concrete,normalize))
 
 #トレーニングデータとテストデータに分ける
@@ -44,15 +44,19 @@ concrete_test = concrete_norm[774:1030,]
 head(concrete)
 head(concrete_norm)
 
+#neuralnetパッケージをインストール
 install.packages("neuralnet")
 library(neuralnet)
 
+#ニューラルネットモデルを作成
 concrete_model = neuralnet(strength ~ cement + slag + ash+ water+superplastic+coarseagg+fineagg+age,data=concrete_train,hidden=3)
 plot(concrete_model)
 
+#モデルをもとに結果を予測
 model_result = compute(concrete_model,concrete_test[1:8])
 predicted_strength = model_result$net.result
 
+#実測値との比較
 cor(predicted_strength, concrete_test$strength)
 
 
