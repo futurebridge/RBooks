@@ -17,6 +17,11 @@ for (i in 1:6){
 }
 contribution
 
+
+plot(gakuryoku.eigen$value, type="b") ; abline(h=1, col="red",lty=2)
+
+
+
 result = prcomp(gakuryoku,scale=TRUE)
 biplot(result)
 

@@ -76,38 +76,57 @@ plot(x, D.fx(x), type = "l", xlim = c(-5, 5), ylim = c(-6, 9), ylab = "")
 
 
 #SGD
+#SGDパッケージのインストール・導入
 install.packages("sgd")
 library(sgd)
 
-concrete = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/concrete.csv") 
-str(concrete)
+#乱数を設定する
+set.seed(42)
+#10000個のデータを作成
+N = 10000
+#特定するパラメータ数
+d = 10
+#10000個のデータに乱数を代入
+X = matrix(rnorm(N*d), ncol=d)
+#特定する目的変数を設定（５を１０個）
+theta = rep(5, d+1)
+eps = rnorm(N)
+y = cbind(1, X) %*% theta + eps
+dat = data.frame(y=y, x=X)
+#回帰モデルでSGDの計算
+sgd.theta = sgd(y ~ ., data=dat, model="lm")
 
-normalize = function(x){
- return((x-min(x)) / (max(x)-min(x)))
-}
+#SGD計算が収束したかどうか（TRUE:収束、FALSE：発散）
+sgd.theta$converged
 
-#コンクリートデータを正規化
-concrete_norm = as.data.frame(lapply(concrete,normalize))
+#SDGによる推定結果
+sgd.theta$coefficients
 
-#トレーニングデータとテストデータに分ける
-concrete_train = concrete_norm[1:733,]
-concrete_test = concrete_norm[774:1030,]
-
-head(concrete)
-head(concrete_norm)
-
-sgd.theta = sgd(strength ~ ., data=concrete_norm,
-               model="glm", model.control=binomial(link="logit"),
-               sgd.control=list(reltol=1e-5, npasses=100),
-                 lr.control=c(scale=1, gamma=1, alpha=30, c=1))
-sgd.theta
+#二乗誤差を計算
+sprintf("平均二乗誤差: %0.3f", mean((theta - as.numeric(sgd.theta$coefficients))^2))
 
 
 #H2Oパッケージのインストール
-install.packages("h2o",type="source",repos=(c("http://h2o-release.s3.amazonaws.com/h2o/rel-ueno/6/R")))
-library(h2o)
-localH2O = h2o.init(nthreads=-1)
+# すでにh2oパッケージがインストールされていたら削除する
+if ("package:h2o" %in% search()) { detach("package:h2o", unload=TRUE) }
+if ("h2o" %in% rownames(installed.packages())) { remove.packages("h2o") }
 
+# h2依存パッケージをダウンロード
+if (! ("methods" %in% rownames(installed.packages()))) { install.packages("methods") }
+if (! ("statmod" %in% rownames(installed.packages()))) { install.packages("statmod") }
+if (! ("stats" %in% rownames(installed.packages()))) { install.packages("stats") }
+if (! ("graphics" %in% rownames(installed.packages()))) { install.packages("graphics") }
+if (! ("RCurl" %in% rownames(installed.packages()))) { install.packages("RCurl") }
+if (! ("jsonlite" %in% rownames(installed.packages()))) { install.packages("jsonlite") }
+if (! ("tools" %in% rownames(installed.packages()))) { install.packages("tools") }
+if (! ("utils" %in% rownames(installed.packages()))) { install.packages("utils") }
+
+#h2o パッケージの導入
+#ディレクトリが変わる可能性があるので、インストールできない場合は、　https://www.h2o.ai/download/　を参照
+install.packages("h2o", type="source", repos=(c("http://h2o-release.s3.amazonaws.com/h2o/rel-ueno/8/R")))
+library(h2o)
+
+localH2O = h2o.init(nthreads=-1)
 
 library(kernlab)
 data(spam)
@@ -117,7 +136,9 @@ spam.num=sample(4601,2500)
 spam.train=spam[spam.num,]
 spam.test=spam[-spam.num,]
 
-model = h2o.deeplearning(x = 1:57, y = 58, training_frame = as.h2o(spam.train),activation="RectifierWithDropout",hidden=c(20, 20, 20),epochs = 1000)
+model = h2o.deeplearning(x = 1:57, y = 58, training_frame = as.h2o(spam.train),activation="RectifierWithDropout",hidden=c(20, 20, 20),epochs = 100)
+
+model
 
 #テストデータをもとに予測
 dp.pre = h2o.predict(object=model,newdata = as.h2o(spam.test[,-58]))

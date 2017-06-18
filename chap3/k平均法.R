@@ -45,22 +45,17 @@ colnames(wine)=c('ƒNƒ‰ƒX','ƒAƒ‹ƒR[ƒ‹','ƒŠƒ“ƒS_','ŠD','ŠD‚ÌƒAƒ‹ƒJƒŠ“x','ƒ}ƒOƒlƒ
 wine2 = wine[setdiff(colnames(wine), "ƒNƒ‰ƒX")]
 
 #k•½‹Ï–@‚ÅƒNƒ‰ƒXƒ^ƒŠƒ“ƒO
-result = kmeans(wine2,3,iter.max = 500)
+result = kmeans(wine2,5,iter.max = 500)
 
 #usefulƒpƒbƒP[ƒW‚ÌƒCƒ“ƒXƒg[ƒ‹
 install.packages("useful")
 library(useful)
 plot(result,data=wine2)
 
-#k•½‹Ï–@‚Å‚ÌƒNƒ‰ƒXƒ^ƒŠƒ“ƒOŒ‹‰Ê(result$cluster)‚Æ³‰ğƒf[ƒ^wine["ƒNƒ‰ƒX"]‚ğresult.m‚Æ‚µ‚Ä‡¬
-(result.m = rbind(table(data.frame(result$cluster)),table(wine["ƒNƒ‰ƒX"])))
-#ŒëŒŸ’m—¦‚ğ‹‚ß‚é=(ƒNƒ‰ƒXƒ^ƒŠƒ“ƒOŒ‹‰Ê-³‰ğƒf[ƒ^‚Ìâ‘Î’l)‚ğ‘S‘Ì”‚ÅŠ„‚é
-sum(abs(result.m[1,]-result.m[2,]))/sum(table(wine["ƒNƒ‰ƒX"]))
-
 
 result2 = clusGap(wine2, kmeans, K.max = 10, B = 100, verbose = interactive())
 result2
-plot(result2)
+
 
 #clusterƒpƒbƒP[ƒW‚ÌƒCƒ“ƒXƒg[ƒ‹
 install.packages("cluster")

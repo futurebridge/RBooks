@@ -20,9 +20,6 @@ for (i in 1:3){
 }
 contribution
 
-#第1、第2主成分の固有ベクトルをプロットする
-plot(Ebeer$vectors[1:3,1:2],xlab="第1主成分",ylab="第2主成分")
-
 #主成分分析
 result = prcomp(beer, scale=TRUE)
 #各ビールの主成分得点を表示
@@ -62,9 +59,9 @@ result.wine = prcomp(wine2, scale=TRUE)
 
 biplot(result.wine)
 
+#第1主成分得点（PC1）について降順にソートしてdataframe型で表示する
 data.frame(sort(result.wine$rotation[,1]))
 
-#strで158番のワインのデータを表示
-str(wine[158,])
-#158番目の主成分得点を表示
-result.wine$x[158,]
+#第2主成分得点（PC1）について降順にソートしてdataframe型で表示する
+data.frame(sort(result.wine$rotation[,2]))
+
