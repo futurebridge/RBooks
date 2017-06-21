@@ -39,6 +39,7 @@ for (	i in svm.model@SVindex){
 sum(beta.x1)
 sum(beta.x2)
 
+
 #決定値の算出
 decision=NULL
 for(i  in 1:5){
@@ -70,6 +71,7 @@ summary(data.frame(kernel1,kernel2,exp(kernel1),exp(kernel2)))
 ###迷惑メール・正常メールデータのロード
 library(kernlab)
 data(spam)
+set.seed(40)
 #4601の中から任意に2500個を抽出
 spam.num=sample(4601,2500)
 spam.train=spam[spam.num,]
@@ -87,7 +89,6 @@ spam.pre = predict(spam.svm, spam.test[,-58])
 
 #カーネル法によるモデル生成
 spam.svm = ksvm(type~., data=spam.train, kernel="rbfdot", C=5, kpar=list(sigma=10))
-
 
 spam.pre = predict(spam.svm, spam.test[,-58])
 
@@ -134,7 +135,7 @@ colnames(letters)=c('letter','x-box','y-box','width','high','onpix','x-bar','y-b
                  'y2bar','xybar','x2ybr','xy2br','x-ege','xegvy','y-ege','yegvx')
 
 
-#letterがAの先頭６データを表示
+#letterAの先頭６データを表示
 head(letters[letters$letter=="A",])
 
 #データの先頭を表示
