@@ -26,23 +26,20 @@ grule3 = subset(grule2,subset=(lift>=1.1))
 
 
 #support 0.03 condidence=0.03 でアソシエーションルール抽出
-grule2=apriori(groceries,parameter=list(support=0.03,confidence=0.03))
-grule3 = subset(grule2,subset=(lift>=1.1))
-inspect(grule3)
+grule4=apriori(groceries,parameter=list(support=0.03,confidence=0.03))
+inspect(grule4)
 
 #arulesVizのインストール
-install.packages(arulesViz)
+install.packages("arulesViz")
 library(arulesViz)
 #グラフの表示
-plot(grule3,method="graph")
+plot(grule5,method="graph")
 #インタラクティブモード
-plot(grule3,method="graph",interactive=TRUE)
+plot(grule5,method="graph",interactive=TRUE)
 
 
-#偶数だけを抽出しgrule4に代入
-grule4=grule3[seq(0, length(grule3), +2),]
 #クラスタリング
-d=dissimilarity(grule3)
+d=dissimilarity(grule4)
 
 #それぞれのクラスタリング手法でクラスタリング
 sngl=hclust(d,"single")
@@ -61,6 +58,31 @@ plot(ward, main="ウォード法");
 plot(cntr, main="重心法"); 
 plot(medi, main="メディアン法");
 
-#ルールを表示
-inspect(grule3)
+#偶数だけを抽出しgrule5に代入
+grule5=grule4[seq(0, length(grule4), +2),]
+inspect(grule5)
+
+#クラスタリング
+d=dissimilarity(grule5)
+
+#それぞれのクラスタリング手法でクラスタリング
+sngl=hclust(d,"single")
+comp=hclust(d) 
+aver=hclust(d,"average")
+ward=hclust(d,"ward.D2")
+cntr=hclust(d,"centroid")
+medi=hclust(d,"median")
+
+#グラフの描画
+par(mfrow=c(2,3));
+plot(sngl, main="単連結法"); 
+plot(comp, main="完全連結法"); 
+plot(aver, main="群平均法") ;　
+plot(ward, main="ウォード法"); 
+plot(cntr, main="重心法"); 
+plot(medi, main="メディアン法");
+
+inspect(grule5[1:22])
+inspect(grule5[23:35])
+inspect(grule5[36:41])
 
