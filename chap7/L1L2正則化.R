@@ -24,7 +24,7 @@ l2model = glmnet(as.matrix(spam[, -58]), spam[, 58], family = "binomial", alpha=
 plot(l2model,label=TRUE,xvar="lambda")
 
 #d—v“x‚ğ‹‚ß‚é
-dotchart(tail(sort(l2model$beta[,1]),30),main="importance")
+dotchart(tail(log(sort(l2model$beta[,1])),30),main="importance")
 
 #ƒÉ‚ğ‹‚ß‚é
 cvmodel = cv.glmnet(as.matrix(spam[, -58]), spam[, 58], family = "binomial")
