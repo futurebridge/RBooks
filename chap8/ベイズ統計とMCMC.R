@@ -102,10 +102,12 @@ plot(result$res2,col="red",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
 
 
 #Stan
-install.packages('rstan')
+#Rtoolsがインストールできたかを確認する
+system(‘g++ -v’)
+#RStanパッケージのインストール
+install.packages(‘rstan’)
 library(rstan)
 
-system('g++ -v')
 
 #ステップ1：stanのコードを読み込む
 weight='
