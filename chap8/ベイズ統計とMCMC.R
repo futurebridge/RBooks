@@ -131,7 +131,7 @@ model {
 '
 
 #ステップ２：Rでデータをロードする
-d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data/chap9/weight.csv") 
+d = read.csv("https://raw.githubusercontent.com/futurebridge/RBooks/master/data/chap8/weight.csv") 
 data = list(N=nrow(d),X=d$X, Y=d$Y) #X,Yをdataに代入
 
 
