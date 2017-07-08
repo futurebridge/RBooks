@@ -17,3 +17,11 @@ weather$min
 #•Ï”‚ÌŠT—v‚ğ•\¦
 summary(weather$min)
 
+#•½‹Ï
+mean(weather$min)
+#•ªU
+var(weather$min)
+#•W€•Î·
+sd(weather$min)
+
+
