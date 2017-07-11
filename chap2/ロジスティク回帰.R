@@ -7,7 +7,7 @@ y = 1 / (1+exp(-x))
 #x,yをプロット
 plot(x,y)
 
-##ロジスティクス回帰１
+##ロジスティク回帰１
 #データ読み込み　タイタニック乗員データ
 d.data = data.frame(Titanic)
 
@@ -37,7 +37,7 @@ result$coefficients
 exp(result$coefficients)
 
 
-##ロジスティクス回帰2 迷惑メール判定
+##ロジスティク回帰2 迷惑メール判定
 #kernlabパッケージの導入
 install.packages("kernlab")
 library(kernlab)
