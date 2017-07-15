@@ -20,7 +20,7 @@ grule1=apriori(groceries)
 
 #support 0.05 condidence=0.1 でアソシエーションルール抽出
 grule2=apriori(groceries,parameter=list(support=0.05,confidence=0.1))
-inspect(grule2)
+inspect(grule2)p
 #リフト値1.1以上を抽出
 grule3 = subset(grule2,subset=(lift>=1.1))
 
