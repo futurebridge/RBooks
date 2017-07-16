@@ -1,5 +1,5 @@
 #ビールデータの読み込み
-source("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap2/beer.R")
+source("https://raw.githubusercontent.com/futurebridge/RBooks/master/chap3/beer.R")
 beer
 
 #相関行列を求める ()は変数に代入しながら値を表示する
