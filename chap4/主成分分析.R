@@ -8,6 +8,8 @@ beer
 #相関行列から固有値、固有ベクトルを求める
 (Ebeer = eigen(Rbeer))
 
+
+
 #累積寄与率を求める
 contribution=NULL
 accumulate=0
@@ -19,6 +21,11 @@ for (i in 1:3){
 					  ,"累積寄与率",accumulate)
 }
 contribution
+
+#第1、第2主成分の固有ベクトルをプロットする
+plot(Ebeer$vectors[1:3,1:2],xlab="第1主成分",ylab="第2主成分")
+
+
 
 #主成分分析
 result = prcomp(beer, scale=TRUE)
