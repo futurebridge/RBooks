@@ -9,7 +9,6 @@ beer
 (Ebeer = eigen(Rbeer))
 
 
-
 #—İÏŠñ—^—¦‚ğ‹‚ß‚é
 contribution=NULL
 accumulate=0
