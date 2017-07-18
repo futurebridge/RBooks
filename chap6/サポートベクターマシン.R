@@ -17,7 +17,7 @@ svm.model = ksvm(factor(y)~x1+x2,data=svm,kernel="vanilladot")
 #サポートベクターの要素を表示
 svm.model@SVindex
 
-#ラグランジュ乗数b、閾値bを表示
+#ラグランジュ乗数α、閾値bを表示
 svm.model@b
 svm.model@alpha
 
