@@ -6,6 +6,13 @@ library(glmnet)
 #spamデータのロード
 library(kernlab)
 data(spam)
+set.seed(40)
+
+#4601の中から任意に2500個を抽出
+spam.num=sample(4601,2500)
+spam.train=spam[spam.num,]
+spam.test=spam[-spam.num,]
+
 
 #L1正則化による推定
 l1model = glmnet(as.matrix(spam[, -58]), spam[, 58], family = "binomial", alpha=1)
