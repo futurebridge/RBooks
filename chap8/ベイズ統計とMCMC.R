@@ -9,7 +9,7 @@ x=seq(0,100,1)
 plot(dbinom(x,100,0.2),type="h",col="blue",xlab="女性の通る回数",ylab="確率")
 
 
-#確率を変えながプロットする
+#確率を変えながらプロットする
 z=seq(0,1,0.01)
 plot(z,dbinom(20,100,z),type="h",col="blue",xlab="θ",ylab="尤度")
 
