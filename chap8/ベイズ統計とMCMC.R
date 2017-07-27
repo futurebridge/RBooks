@@ -42,10 +42,10 @@ y = runif(N, min=-1, max=1)
 
 sqrt(x^2+y^2)
 
-#x軸y軸ともに-1?+1の範囲をプロット
+#x軸y軸ともに-1～+1の範囲をプロット
 plot(x, y, pch = ifelse(sqrt(x^2+y^2)<1, 20, 1))
 
-#4/Πをもとめる
+#Π/4をもとめる
 result = data.frame(table(sqrt(x^2+y^2)>1))
 
 #4倍してΠを求める
@@ -103,9 +103,9 @@ plot(result$res2,col="red",type="l",ylab="確率",xlab="回数",ylim=c(0,1.0))
 
 #Stan
 #Rtoolsがインストールできたかを確認する
-system(‘g++ -v’)
+system('g++ -v')
 #RStanパッケージのインストール
-install.packages(‘rstan’)
+install.packages('rstan')
 library(rstan)
 
 
