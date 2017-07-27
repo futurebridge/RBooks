@@ -126,8 +126,6 @@ if (! ("utils" %in% rownames(installed.packages()))) { install.packages("utils")
 install.packages("h2o", type="source", repos=(c("http://h2o-release.s3.amazonaws.com/h2o/rel-ueno/8/R")))
 library(h2o)
 
-localH2O = h2o.init(nthreads=-1)
-
 library(kernlab)
 data(spam)
 set.seed(50)
