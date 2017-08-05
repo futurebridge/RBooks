@@ -20,7 +20,7 @@ plot(children$age, children$weight,main="年齢と体重",ylab="年齢",xlab="体重")
 #身長の分布に関するヒストグラムを描画
 hist(children$length,main="身長の分布",xlab="身長")
 #身長の分布に関するヒストグラムを描画
-hist(children$weight,main="体重の分布",xlab="身長")
+hist(children$weight,main="体重の分布",xlab="体重")
 
 #回帰モデルの作成
 result = lm(age~length, data=children)
