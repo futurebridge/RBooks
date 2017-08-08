@@ -33,9 +33,9 @@ inspect(grule4)
 install.packages("arulesViz")
 library(arulesViz)
 #グラフの表示
-plot(grule5,method="graph")
+plot(grule4,method="graph")
 #インタラクティブモード
-plot(grule5,method="graph",interactive=TRUE)
+plot(grule4,method="graph",interactive=TRUE)
 
 
 #クラスタリング

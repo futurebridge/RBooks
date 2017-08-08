@@ -52,7 +52,7 @@ install.packages("useful")
 library(useful)
 plot(result,data=wine2)
 
-
+#ƒMƒƒƒbƒv“Œv—Ê‚ğ‹‚ß‚é
 result2 = clusGap(wine2, kmeans, K.max = 10, B = 100, verbose = interactive())
 result2
 
