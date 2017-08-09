@@ -61,6 +61,7 @@ plot(medi, main="メディアン法");
 #ルールの表示
 inspect(grule4)
 
+
 #偶数だけを抽出しgrule5に代入
 grule5=grule4[seq(0, length(grule4), +2),]
 inspect(grule5)
