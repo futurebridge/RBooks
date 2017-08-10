@@ -128,9 +128,10 @@ cross.svm
 library(kernlab)
 
 
-#アルファベットデータの読み込み
+#アルファベットデータの読み込み,ヘッダについては2行目で指定するので不要（F）
 letters = read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/letter-recognition/letter-recognition.data",header=F)
 
+#列名の設定
 colnames(letters)=c('letter','x-box','y-box','width','high','onpix','x-bar','y-bar','x2bar',
                  'y2bar','xybar','x2ybr','xy2br','x-ege','xegvy','y-ege','yegvx')
 
