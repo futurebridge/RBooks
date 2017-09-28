@@ -10,7 +10,7 @@ cor.test(children$age,children$weight)
 #年齢と身長との相関係数を算出
 cor.test(children$age,children$length)
 
-＃２ｘ２のグラフを出力　最後に”;”をつける
+＃２ｘ２のグラフを出力
 par(mfrow=c(2,2));
 ＃年齢と身長のグラフを描画
 plot(children$age, children$length,main="年齢と身長",ylab="年齢",xlab="身長")
